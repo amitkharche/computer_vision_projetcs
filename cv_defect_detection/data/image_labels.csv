@@ -1,0 +1,11 @@
+image_path,label
+data/images/image_1.jpg,defective
+data/images/image_2.jpg,defective
+data/images/image_3.jpg,defective
+data/images/image_4.jpg,defective
+data/images/image_5.jpg,defective
+data/images/image_6.jpg,non-defective
+data/images/image_7.jpg,non-defective
+data/images/image_8.jpg,non-defective
+data/images/image_9.jpg,non-defective
+data/images/image_10.jpg,non-defective

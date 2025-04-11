@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+*.pkl
+*.h5
+.env
+.DS_Store
+.ipynb_checkpoints/
+model/
