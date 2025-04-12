@@ -1,3 +1,4 @@
+
 """
 Streamlit app to classify uploaded images as defective or non-defective.
 """
@@ -29,12 +30,22 @@ uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png
 
 if uploaded_file:
     img = Image.open(uploaded_file).convert("RGB")
-    st.image(img, caption="Uploaded Image", use_column_width=True)
+    st.image(img, caption="Uploaded Image", use_container_width=True)
     st.write("")
 
     img_tensor = preprocess_image(img)
     prediction = model.predict(img_tensor)[0][0]
-    label = "defective" if prediction > 0.5 else "non-defective"
+    label = "non-defective" if prediction > 0.5 else "defective"
+    confidence = prediction if label == "defective" else 1 - prediction
 
     st.markdown(f"### 🔍 Prediction: **{label.upper()}**")
-    st.progress(int(prediction * 100)) if label == "defective" else st.progress(int((1 - prediction) * 100))
+    st.markdown(f"**Confidence:** `{confidence * 100:.2f}%`")
+    st.progress(int(confidence * 100))
+
+    # Optional: Add feedback based on confidence
+    if confidence > 0.8:
+        st.success("High confidence prediction")
+    elif confidence > 0.6:
+        st.info("Moderate confidence")
+    else:
+        st.warning("Low confidence — consider manual review")

@@ -1,3 +1,4 @@
+
 """
 Train a CNN model to classify images as defective or non-defective.
 """
@@ -42,18 +43,22 @@ def build_model():
 
 def main():
     df = load_data()
-    df["label"] = df["label"].map({"defective": 1, "non-defective": 0})
 
+    # ✅ Keep labels as strings for class_mode='binary'
     train_df, val_df = train_test_split(df, test_size=0.2, stratify=df["label"], random_state=42)
 
     train_gen = ImageDataGenerator(rescale=1./255)
     val_gen = ImageDataGenerator(rescale=1./255)
 
-    train_data = train_gen.flow_from_dataframe(train_df, directory=IMAGE_DIR, x_col="image_path", y_col="label",
-                                               target_size=IMG_SIZE, batch_size=BATCH_SIZE, class_mode='binary')
+    train_data = train_gen.flow_from_dataframe(
+        train_df, directory=IMAGE_DIR, x_col="image_path", y_col="label",
+        target_size=IMG_SIZE, batch_size=BATCH_SIZE, class_mode='binary'
+    )
 
-    val_data = val_gen.flow_from_dataframe(val_df, directory=IMAGE_DIR, x_col="image_path", y_col="label",
-                                           target_size=IMG_SIZE, batch_size=BATCH_SIZE, class_mode='binary')
+    val_data = val_gen.flow_from_dataframe(
+        val_df, directory=IMAGE_DIR, x_col="image_path", y_col="label",
+        target_size=IMG_SIZE, batch_size=BATCH_SIZE, class_mode='binary'
+    )
 
     model = build_model()
     model.fit(train_data, validation_data=val_data, epochs=EPOCHS)

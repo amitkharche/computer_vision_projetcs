@@ -62,7 +62,8 @@ def main():
 
     df, le = load_data()
     X, y = load_images(df)
-    X_train, X_val, y_train, y_val = train_test_split(X, y, stratify=y, test_size=0.2, random_state=42)
+    #X_train, X_val, y_train, y_val = train_test_split(X, y, stratify=y, test_size=0.2, random_state=42)
+    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
 
     model = build_model((*IMG_SIZE, 3), y.shape[1])
     early_stop = EarlyStopping(patience=3, restore_best_weights=True)

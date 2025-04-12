@@ -28,7 +28,8 @@ model, label_encoder = load_model()
 uploaded_file = st.file_uploader("Upload a product image (JPG/PNG)", type=["jpg", "jpeg", "png"])
 if uploaded_file:
     image = Image.open(uploaded_file).convert("RGB")
-    st.image(image, caption="Uploaded Image", use_column_width=False, width=250)
+    #st.image(image, caption="Uploaded Image", use_column_width=False, width=250)
+    st.image(image, caption="Uploaded Image", use_container_width=False, width=250)
     input_tensor = preprocess_image(image)
     prediction = model.predict(input_tensor)[0]
     predicted_label = label_encoder.inverse_transform([np.argmax(prediction)])[0]
